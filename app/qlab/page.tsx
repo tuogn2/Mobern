@@ -3,10 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import './qlab.css';
 import { getLots, getLotTests, saveTestResult } from './actions';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from 'recharts';
 import MethodsView from './MethodsView';
 import SpecsView from './SpecsView';
 import ReviewView from './ReviewView';
+import ReportsView from './ReportsView';
 import AdminView from './AdminView';
 
 type Status = 'Pending' | 'In Progress' | 'Pass' | 'Failed';
@@ -145,70 +145,6 @@ function TestEntryView({ selectedLot, tester, onBack, onViewCoA, role }: { selec
     );
 }
 
-// ─── Reports ─────────────────────────────────────────────────
-function ReportsView() {
-    const [failedResults, setFailedResults] = useState<any[]>([]);
-    const [trendData, setTrendData] = useState<any[]>([]);
-    const [metrics, setMetrics] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
-    useEffect(() => {
-        Promise.all([
-            import('./reportActions').then(m => m.getFailedResults()),
-            import('./analyticsActions').then(m => Promise.all([m.getTrendData('Q100', 1), m.getQualityMetrics()]))
-        ]).then(([failed, [trend, qualMetrics]]) => { setFailedResults(failed); setTrendData(trend); setMetrics(qualMetrics); setLoading(false); });
-    }, []);
-    if (loading) return <div className="loading">Processing analytics...</div>;
-    return (
-        <div>
-            <div className="stats-row">
-                <StatCard label="Total Failures" value={failedResults.length} color="var(--danger)" />
-                <StatCard label="Qualities Tracked" value={metrics.length} color="var(--primary)" />
-                <StatCard label="Trend Points" value={trendData.length} color="var(--primary)" />
-                <StatCard label="Alerts" value="0" color="var(--success)" />
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
-                <section className="card">
-                    <h2 className="card-title">Quality Trend (Q100 - Tensile)</h2>
-                    <div style={{ height: 280, width: '100%' }}>
-                        <ResponsiveContainer width="100%" height="100%">
-                            <LineChart data={trendData}>
-                                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                                <XAxis dataKey="date" /><YAxis /><Tooltip /><Legend />
-                                <ReferenceLine y={trendData[0]?.min} label="Min" stroke="red" strokeDasharray="3 3" />
-                                <ReferenceLine y={trendData[0]?.max} label="Max" stroke="red" strokeDasharray="3 3" />
-                                <Line type="monotone" dataKey="value" name="Result" stroke="#0B77AA" strokeWidth={2} dot={{ fill: '#0B77AA' }} />
-                            </LineChart>
-                        </ResponsiveContainer>
-                    </div>
-                </section>
-                <section className="card">
-                    <h2 className="card-title">Failure Rate by Quality Code</h2>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', paddingTop: '1rem' }}>
-                        {metrics.map((m: any) => { const rate = m.total_lots > 0 ? Math.round((m.fail_count / m.total_lots) * 100) : 0; return (
-                            <div key={m.quality_code} style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                                <div style={{ width: 80, fontWeight: 700 }}>{m.quality_code}</div>
-                                <div style={{ flex: 1, height: 14, background: '#f1f5f9', borderRadius: 7, overflow: 'hidden' }}><div style={{ width: `${rate}%`, height: '100%', background: rate > 0 ? 'var(--danger)' : 'var(--success)', borderRadius: 7 }} /></div>
-                                <div style={{ width: 70, fontSize: '0.8rem' }}>{rate}% Fail</div>
-                            </div>
-                        ); })}
-                    </div>
-                </section>
-            </div>
-            <section className="card full-width">
-                <h2 className="card-title">Failure Logs</h2>
-                <table className="lot-table">
-                    <thead><tr><th>Date</th><th>Lot</th><th>Quality</th><th>Test</th><th>Result</th><th>Operator</th></tr></thead>
-                    <tbody>
-                        {failedResults.map((res: any, i: number) => (
-                            <tr key={i}><td>{new Date(res.tested_at).toLocaleDateString()}</td><td>{res.lot_number}</td><td>{res.quality_code}</td><td>{res.test_name}</td><td style={{ color: 'var(--danger)', fontWeight: 700 }}>{res.numeric_result ?? res.observation_result}</td><td>{res.tested_by}</td></tr>
-                        ))}
-                        {failedResults.length === 0 && <tr><td colSpan={6} style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-dim)' }}>No failures recorded ✨</td></tr>}
-                    </tbody>
-                </table>
-            </section>
-        </div>
-    );
-}
 
 // ─── CoA View ────────────────────────────────────────────────
 function CoAView({ lot, onBack }: { lot: Lot; onBack: () => void }) {

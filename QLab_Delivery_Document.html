@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QLab Pro — Development Delivery Document</title>
+  <link rel="icon" type="image/jpeg" href="faviconV2.jpeg">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: #1e293b;
+      line-height: 1.7;
+      background: #f8fafc
+    }
+
+    .doc {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #fff;
+      box-shadow: 0 0 40px rgba(0, 0, 0, .08)
+    }
+
+    .cover {
+      background: linear-gradient(135deg, #0B77AA 0%, #064e72 100%);
+      color: #fff;
+      padding: 4rem 3.5rem;
+      position: relative;
+      overflow: hidden
+    }
+
+    .cover::after {
+      content: '';
+      position: absolute;
+      right: -80px;
+      top: -80px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .05)
+    }
+
+    .cover h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: .5rem;
+      letter-spacing: -.5px
+    }
+
+    .cover .subtitle {
+      font-size: 1.1rem;
+      opacity: .85;
+      margin-bottom: 2rem
+    }
+
+    .cover .meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .75rem
+    }
+
+    .cover .meta-item {
+      font-size: .85rem;
+      opacity: .9
+    }
+
+    .cover .meta-item strong {
+      display: block;
+      opacity: .6;
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px
+    }
+
+    .badge {
+      display: inline-block;
+      background: #10b981;
+      color: #fff;
+      padding: .3rem .8rem;
+      border-radius: 20px;
+      font-size: .8rem;
+      font-weight: 700;
+      margin-top: 1rem
+    }
+
+    .content {
+      padding: 2.5rem 3.5rem
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      color: #0B77AA;
+      border-bottom: 2px solid #0B77AA;
+      padding-bottom: .5rem;
+      margin: 2.5rem 0 1.25rem;
+      font-weight: 700
+    }
+
+    h2:first-child {
+      margin-top: 0
+    }
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #334155;
+      margin: 1.5rem 0 .75rem
+    }
+
+    h4 {
+      font-size: .9rem;
+      font-weight: 600;
+      color: #475569;
+      margin: 1rem 0 .5rem
+    }
+
+    p {
+      margin-bottom: .75rem;
+      font-size: .9rem
+    }
+
+    ul,
+    ol {
+      margin: 0 0 1rem 1.5rem;
+      font-size: .9rem
+    }
+
+    li {
+      margin-bottom: .35rem
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0 1.5rem;
+      font-size: .82rem
+    }
+
+    th {
+      background: #f1f5f9;
+      font-weight: 700;
+      text-align: left;
+      padding: .6rem .75rem;
+      border: 1px solid #e2e8f0;
+      color: #334155;
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: .5px
+    }
+
+    td {
+      padding: .55rem .75rem;
+      border: 1px solid #e2e8f0;
+      vertical-align: top
+    }
+
+    tr:nth-child(even) {
+      background: #fafbfc
+    }
+
+    .check {
+      color: #10b981;
+      font-weight: 700
+    }
+
+    .cross {
+      color: #ef4444;
+      font-weight: 700
+    }
+
+    code {
+      background: #f1f5f9;
+      padding: .15rem .4rem;
+      border-radius: 3px;
+      font-size: .8rem;
+      color: #0B77AA;
+      font-family: 'Cascadia Code', 'Fira Code', monospace
+    }
+
+    pre {
+      background: #1e293b;
+      color: #e2e8f0;
+      padding: 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 1rem 0 1.5rem;
+      font-size: .78rem;
+      line-height: 1.6
+    }
+
+    pre code {
+      background: none;
+      color: inherit;
+      padding: 0
+    }
+
+    .sql-kw {
+      color: #7dd3fc
+    }
+
+    .note {
+      background: #eff6ff;
+      border-left: 4px solid #0B77AA;
+      padding: .75rem 1rem;
+      margin: 1rem 0;
+      border-radius: 0 6px 6px 0;
+      font-size: .85rem
+    }
+
+    .arch-box {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      font-family: 'Cascadia Code', 'Fira Code', monospace;
+      font-size: .75rem;
+      line-height: 1.8;
+      white-space: pre;
+      overflow-x: auto
+    }
+
+    .status-pass {
+      color: #059669;
+      font-weight: 700
+    }
+
+    .status-fail {
+      color: #dc2626;
+      font-weight: 700
+    }
+
+    .status-pending {
+      color: #d97706;
+      font-weight: 700
+    }
+
+    .status-progress {
+      color: #0B77AA;
+      font-weight: 700
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #e2e8f0;
+      margin: 2rem 0
+    }
+
+    .toc {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0
+    }
+
+    .toc h3 {
+      margin: 0 0 .75rem;
+      font-size: .9rem;
+      color: #0B77AA
+    }
+
+    .toc ol {
+      margin: 0 0 0 1.25rem
+    }
+
+    .toc li {
+      margin-bottom: .25rem;
+      font-size: .85rem
+    }
+
+    .toc a {
+      color: #0B77AA;
+      text-decoration: none
+    }
+
+    .toc a:hover {
+      text-decoration: underline
+    }
+
+    @media print {
+      body {
+        background: #fff
+      }
+
+      .doc {
+        box-shadow: none;
+        max-width: none
+      }
+
+      h2 {
+        break-before: auto;
+        page-break-after: avoid
+      }
+
+      table {
+        page-break-inside: avoid
+      }
+
+      .cover {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="doc">
+
+    <!-- COVER -->
+    <div class="cover">
+      <h1>Quality Lab Application</h1>
+      <p class="subtitle">Development Delivery Document</p>
+      <div class="meta">
+        <div class="meta-item"><strong>Project</strong>QLab Pro — Quality Lab Management System</div>
+        <div class="meta-item"><strong>Version</strong>1.0.0</div>
+        <div class="meta-item"><strong>Delivery Date</strong>May 15, 2026</div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- TOC -->
+      <div class="toc">
+        <h3>Table of Contents</h3>
+        <ol>
+          <li><a href="#s1">Summary</a></li>
+          <li><a href="#s2">System Context &amp; Constraints</a></li>
+          <li><a href="#s3">User Roles &amp; Permissions</a></li>
+          <li><a href="#s4">Data Model (Implementation)</a></li>
+          <li><a href="#s5">Lab Status Logic</a></li>
+          <li><a href="#s6">Data Entry &amp; Validation</a></li>
+          <li><a href="#s7">Certificate of Analysis (CoA)</a></li>
+          <li><a href="#s8">Reporting &amp; Analytics</a></li>
+          <li><a href="#s9">User Interface</a></li>
+        </ol>
+      </div>
+
+      <!-- 1. SUMMARY -->
+      <h2 id="s1">1. Summary</h2>
+      <p>This document confirms the delivery of the Quality Lab Management application as specified in the original
+        Development Specification.</p>
+      <p>The delivered application enables laboratory staff to:</p>
+      <ul>
+        <li><span class="check">✅</span> Record lab test results for production lots</li>
+        <li><span class="check">✅</span> Enforce product specifications automatically</li>
+        <li><span class="check">✅</span> Determine lot-level pass/fail status</li>
+        <li><span class="check">✅</span> Generate Certificates of Analysis (CoA)</li>
+        <li><span class="check">✅</span> Perform trending and failure analysis</li>
+      </ul>
+      <p>The application integrates with the existing production environment, consuming data from existing SQL Server
+        tables (<code>TP</code>, <code>TP_PEZZE</code>) for lots, quality master data, and production schedule, while
+        introducing new lab-specific tables in the Retool PostgreSQL database.</p>
+
+      <!-- 2. SYSTEM CONTEXT -->
+      <h2 id="s2">2. System Context &amp; Constraints</h2>
+
+      <h3>Existing Data (Reused — Not Modified)</h3>
+      <p>The following existing production tables are consumed as authoritative data sources and have
+        <strong>not</strong> been created, duplicated, or modified by this project. They reside in the existing SQL
+        Server / Retool environment:
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Existing Table</th>
+            <th>Key Fields Used</th>
+            <th>Usage in QLab</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong><code>TP</code></strong><br>(Production Schedule / Lots)</td>
+            <td><code>TP_SKID</code>, <code>TP_STKNO_CodeQuality</code>, <code>TP_QDESC_DescQuality</code>,
+              <code>TP_STKNO_CodePattern</code>, <code>TP_STKNO_CodeColor</code>, <code>TP_NPNO_NewProduct</code>,
+              <code>TP_DATAINS</code>
+            </td>
+            <td>Source of truth for production lots. Drives automatic test plan creation. Provides quality code, product
+              description, pattern, and color for CoA and lot displays.</td>
+          </tr>
+          <tr>
+            <td><strong><code>TP_PEZZE</code></strong><br>(Rolls / Pieces)</td>
+            <td><code>PZ_TPSKID</code>, <code>PZ_FINEVISITA</code>, <code>PZ_YDALLUNGATE</code>,
+              <code>PZ_YDBONIFICO</code>, <code>PZ_SCELTAFINALE</code>
+            </td>
+            <td>Roll-level inspection data. Linked to <code>TP</code> via <code>PZ_TPSKID = TP_SKID</code>. Used for
+              date filtering and production yield context.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>Existing Queries — Lots</h4>
+      <pre><code><span class="sql-kw">SELECT</span>
+  PZ_TPSKID, TP_NPNO_NewProduct,
+  <span class="sql-kw">MAX</span>(PZ_FINEVISITA) <span class="sql-kw">as</span> Earliest,
+  <span class="sql-kw">SUM</span>(PZ_YDALLUNGATE) <span class="sql-kw">as</span> Inspected,
+  TP_STKNO_CodeQuality <span class="sql-kw">as</span> Quality,
+  TP_QDESC_DescQuality <span class="sql-kw">as</span> 'Desc Quality',
+  TP_STKNO_CodePattern <span class="sql-kw">as</span> Pattern,
+  TP_STKNO_CodeColor <span class="sql-kw">as</span> Color
+<span class="sql-kw">FROM</span> TP_PEZZE
+<span class="sql-kw">LEFT JOIN</span> TP <span class="sql-kw">ON</span> TP.TP_SKID = TP_PEZZE.PZ_TPSKID
+<span class="sql-kw">GROUP BY</span> PZ_TPSKID, TP_NPNO_NewProduct, ...</code></pre>
+
+      <h4>Existing Queries — Quality</h4>
+      <pre><code><span class="sql-kw">SELECT</span>
+  tp.TP_STKNO_CodeQuality <span class="sql-kw">AS</span> Quality,
+  <span class="sql-kw">MAX</span>(<span class="sql-kw">LTRIM</span>(<span class="sql-kw">RTRIM</span>(tp.TP_QDESC_DescQuality))) <span class="sql-kw">AS</span> DescQuality,
+  <span class="sql-kw">SUM</span>(pz.PZ_YDALLUNGATE) <span class="sql-kw">AS</span> Inspected
+<span class="sql-kw">FROM</span> TP_PEZZE pz
+<span class="sql-kw">JOIN</span> TP tp <span class="sql-kw">ON</span> tp.TP_SKID = pz.PZ_TPSKID
+<span class="sql-kw">GROUP BY</span> tp.TP_STKNO_CodeQuality</code></pre>
+
+      <h4>Existing Queries — Schedule</h4>
+      <pre><code><span class="sql-kw">SELECT</span>
+  TP_SKID, <span class="sql-kw">MAX</span>(PZ_FINEVISITA) <span class="sql-kw">as</span> Earliest,
+  <span class="sql-kw">SUM</span>(PZ_YDALLUNGATE) <span class="sql-kw">as</span> Inspected,
+  TP_DATAINS, TP_STKNO_CodeQuality,
+  TP_QDESC_DescQuality, TP_CAST_DATE, TP_CAST_YARDS
+<span class="sql-kw">FROM</span> TP
+<span class="sql-kw">LEFT JOIN</span> TP_PEZZE <span class="sql-kw">ON</span> TP.TP_SKID = TP_PEZZE.PZ_TPSKID
+<span class="sql-kw">GROUP BY</span> TP_SKID, ...</code></pre>
+
+      <p>These queries are executed via the existing Retool SQL Server resource and feed lot data into the QLab
+        application.</p>
+
+      <h3>New Data (Created in Retool PostgreSQL)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>New Table</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>tp_lots</code></td>
+            <td>Lab lot registry — syncs lot references from production <code>TP</code> table</td>
+          </tr>
+          <tr>
+            <td><code>test_methods</code></td>
+            <td>Registry of all laboratory test methods</td>
+          </tr>
+          <tr>
+            <td><code>specifications</code></td>
+            <td>Versioned product quality specifications</td>
+          </tr>
+          <tr>
+            <td><code>spec_tests</code></td>
+            <td>Junction table: specification ↔ test method relationships with acceptance limits</td>
+          </tr>
+          <tr>
+            <td><code>test_plans</code></td>
+            <td>Per-lot test plans derived from active specifications</td>
+          </tr>
+          <tr>
+            <td><code>test_results</code></td>
+            <td>Individual test results with full audit trail</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="note">The <code>tp_lots</code> table acts as a bridge between the production SQL Server data
+        (<code>TP.TP_SKID</code>) and the lab PostgreSQL data, storing <code>tp_skid</code> (mapped from
+        <code>TP_SKID</code>), <code>quality_code</code> (from <code>TP_STKNO_CodeQuality</code>), and
+        <code>lot_number</code>.
+      </div>
+
+      <!-- 3. ROLES -->
+      <h2 id="s3">3. User Roles &amp; Permissions</h2>
+
+      <h3>Roles</h3>
+      <h4>Lab Operator</h4>
+      <ul>
+        <li><span class="check">✅</span> View assigned and pending lab tests on the Dashboard</li>
+        <li><span class="check">✅</span> Enter test results for lots (numeric values and Pass/Fail observations)</li>
+        <li><span class="check">✅</span> View pass/fail outcomes with color-coded status indicators</li>
+        <li><span class="check">✅</span> Cannot access test methods, specifications, review, reporting, or admin pages
+        </li>
+      </ul>
+      <h4>Lab Manager</h4>
+      <ul>
+        <li><span class="check">✅</span> All Lab Operator permissions</li>
+        <li><span class="check">✅</span> Create, edit, and deactivate test methods</li>
+        <li><span class="check">✅</span> Create and maintain specifications (with versioning)</li>
+        <li><span class="check">✅</span> Review test results across all lots</li>
+        <li><span class="check">✅</span> Add comments and override results with mandatory justification</li>
+        <li><span class="check">✅</span> Generate Certificates of Analysis</li>
+      </ul>
+      <h4>Quality Manager (Admin)</h4>
+      <ul>
+        <li><span class="check">✅</span> Full access to all functionality</li>
+        <li><span class="check">✅</span> Manage all master data (methods, specifications)</li>
+        <li><span class="check">✅</span> Full reporting and historical analysis (trends, failure reports, CSV export)
+        </li>
+        <li><span class="check">✅</span> System-level oversight via Admin panel with complete audit trail</li>
+      </ul>
+
+      <h3>Permission Matrix</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Function</th>
+            <th style="text-align:center">Operator</th>
+            <th style="text-align:center">Lab Manager</th>
+            <th style="text-align:center">Quality Manager</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>View test plans</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td class="check" style="text-align:center">✅</td>
+          </tr>
+          <tr>
+            <td>Enter test results</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td class="check" style="text-align:center">✅</td>
+          </tr>
+          <tr>
+            <td>Manage test methods</td>
+            <td class="cross" style="text-align:center">❌</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td class="check" style="text-align:center">✅</td>
+          </tr>
+          <tr>
+            <td>Manage specifications</td>
+            <td class="cross" style="text-align:center">❌</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td class="check" style="text-align:center">✅</td>
+          </tr>
+          <tr>
+            <td>Override results</td>
+            <td class="cross" style="text-align:center">❌</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td class="check" style="text-align:center">✅</td>
+          </tr>
+          <tr>
+            <td>Generate CoA</td>
+            <td class="cross" style="text-align:center">❌</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td class="check" style="text-align:center">✅</td>
+          </tr>
+          <tr>
+            <td>View trends &amp; failures</td>
+            <td class="cross" style="text-align:center">❌</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td class="check" style="text-align:center">✅</td>
+          </tr>
+          <tr>
+            <td>Admin configuration</td>
+            <td class="cross" style="text-align:center">❌</td>
+            <td class="cross" style="text-align:center">❌</td>
+            <td class="check" style="text-align:center">✅</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- 4. DATA MODEL -->
+      <h2 id="s4">4. Data Model (Implementation)</h2>
+
+      <h3>4.1 Test Methods</h3>
+      <p>Implemented in table: <code>test_methods</code> (Retool PostgreSQL)</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>id</code></td>
+            <td>SERIAL PK</td>
+            <td>Auto-increment primary key</td>
+          </tr>
+          <tr>
+            <td><code>test_code</code></td>
+            <td>VARCHAR(20) UNIQUE</td>
+            <td>Unique identifier (e.g. TS-01, EL-01)</td>
+          </tr>
+          <tr>
+            <td><code>name</code></td>
+            <td>VARCHAR(100) NOT NULL</td>
+            <td>Test name / description</td>
+          </tr>
+          <tr>
+            <td><code>unit</code></td>
+            <td>VARCHAR(20)</td>
+            <td>Unit of measure (e.g. kg/cm², %, mm)</td>
+          </tr>
+          <tr>
+            <td><code>method_type</code></td>
+            <td>VARCHAR(20)</td>
+            <td><code>Numeric</code> or <code>Observation</code></td>
+          </tr>
+          <tr>
+            <td><code>reference_standard</code></td>
+            <td>VARCHAR(100)</td>
+            <td>ASTM or other reference standard</td>
+          </tr>
+          <tr>
+            <td><code>is_active</code></td>
+            <td>BOOLEAN</td>
+            <td>Active/inactive flag (default: TRUE)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>4.2 Specifications</h3>
+      <p>Implemented in tables: <code>specifications</code> + <code>spec_tests</code></p>
+      <h4>specifications</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>id</code></td>
+            <td>SERIAL PK</td>
+            <td>Auto-increment primary key</td>
+          </tr>
+          <tr>
+            <td><code>quality_code</code></td>
+            <td>VARCHAR(50) NOT NULL</td>
+            <td>Links to production quality (<code>TP_STKNO_CodeQuality</code>)</td>
+          </tr>
+          <tr>
+            <td><code>version</code></td>
+            <td>INTEGER</td>
+            <td>Incrementing version number (default: 1)</td>
+          </tr>
+          <tr>
+            <td><code>is_active</code></td>
+            <td>BOOLEAN</td>
+            <td>Only one active version per quality code</td>
+          </tr>
+          <tr>
+            <td><code>created_at</code></td>
+            <td>TIMESTAMP</td>
+            <td>Creation timestamp</td>
+          </tr>
+        </tbody>
+      </table>
+      <h4>spec_tests (junction)</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>id</code></td>
+            <td>SERIAL PK</td>
+            <td>Auto-increment primary key</td>
+          </tr>
+          <tr>
+            <td><code>spec_id</code></td>
+            <td>INTEGER FK</td>
+            <td>References <code>specifications(id)</code> ON DELETE CASCADE</td>
+          </tr>
+          <tr>
+            <td><code>test_method_id</code></td>
+            <td>INTEGER FK</td>
+            <td>References <code>test_methods(id)</code></td>
+          </tr>
+          <tr>
+            <td><code>min_value</code></td>
+            <td>FLOAT</td>
+            <td>Minimum acceptable value (Numeric tests, optional)</td>
+          </tr>
+          <tr>
+            <td><code>max_value</code></td>
+            <td>FLOAT</td>
+            <td>Maximum acceptable value (Numeric tests, optional)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>4.3 Test Plans</h3>
+      <p>Implemented in table: <code>test_plans</code></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>id</code></td>
+            <td>SERIAL PK</td>
+            <td>Auto-increment primary key</td>
+          </tr>
+          <tr>
+            <td><code>tp_skid</code></td>
+            <td>INTEGER NOT NULL</td>
+            <td>Maps to production <code>TP_SKID</code> via <code>tp_lots</code></td>
+          </tr>
+          <tr>
+            <td><code>spec_id</code></td>
+            <td>INTEGER FK</td>
+            <td>References <code>specifications(id)</code> — active spec at creation</td>
+          </tr>
+          <tr>
+            <td><code>status</code></td>
+            <td>VARCHAR(20)</td>
+            <td><code>Pending</code> → <code>In Progress</code> → <code>Pass</code> / <code>Failed</code></td>
+          </tr>
+          <tr>
+            <td><code>created_at</code></td>
+            <td>TIMESTAMP</td>
+            <td>Creation timestamp</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="note"><strong>Automatic generation:</strong> A server-side sync function (<code>syncTestPlans</code>)
+        executes on every Dashboard load. It scans production data for lots that don't yet have a test plan, creates the
+        <code>tp_lots</code> bridge record, and generates the test plan. No cron jobs or DB triggers required.
+      </div>
+
+      <h3>4.4 Test Results</h3>
+      <p>Implemented in table: <code>test_results</code></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>id</code></td>
+            <td>SERIAL PK</td>
+            <td>Auto-increment primary key</td>
+          </tr>
+          <tr>
+            <td><code>test_plan_id</code></td>
+            <td>INTEGER FK</td>
+            <td>References <code>test_plans(id)</code> ON DELETE CASCADE</td>
+          </tr>
+          <tr>
+            <td><code>test_method_id</code></td>
+            <td>INTEGER FK</td>
+            <td>References <code>test_methods(id)</code></td>
+          </tr>
+          <tr>
+            <td><code>numeric_result</code></td>
+            <td>FLOAT</td>
+            <td>Measured value (Numeric tests)</td>
+          </tr>
+          <tr>
+            <td><code>observation_result</code></td>
+            <td>VARCHAR(10)</td>
+            <td><code>Pass</code> or <code>Fail</code> (Observation tests)</td>
+          </tr>
+          <tr>
+            <td><code>result_status</code></td>
+            <td>VARCHAR(10)</td>
+            <td>Auto-computed: <code>Pass</code> or <code>Fail</code></td>
+          </tr>
+          <tr>
+            <td><code>test_status</code></td>
+            <td>VARCHAR(20)</td>
+            <td><code>Pending</code> → <code>Completed</code></td>
+          </tr>
+          <tr>
+            <td><code>tested_by</code></td>
+            <td>VARCHAR(100)</td>
+            <td>Operator who performed the test</td>
+          </tr>
+          <tr>
+            <td><code>tested_at</code></td>
+            <td>TIMESTAMP</td>
+            <td>When the test was performed</td>
+          </tr>
+          <tr>
+            <td><code>comments</code></td>
+            <td>TEXT</td>
+            <td>Optional operator notes</td>
+          </tr>
+          <tr>
+            <td><code>is_override</code></td>
+            <td>BOOLEAN</td>
+            <td>Whether result was overridden (default: FALSE)</td>
+          </tr>
+          <tr>
+            <td><code>overridden_by</code></td>
+            <td>VARCHAR(100)</td>
+            <td>Who performed the override</td>
+          </tr>
+          <tr>
+            <td><code>overridden_at</code></td>
+            <td>TIMESTAMP</td>
+            <td>When the override occurred</td>
+          </tr>
+          <tr>
+            <td><code>override_reason</code></td>
+            <td>TEXT</td>
+            <td>Mandatory justification for override</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="note"><strong>Unique constraint:</strong> <code>(test_plan_id, test_method_id)</code> — prevents
+        duplicate test entries per plan.</div>
+
+      <!-- 5. LAB STATUS -->
+      <h2 id="s5">5. Lab Status Logic</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Meaning</th>
+            <th>Implementation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="status-pending">Pending</span></td>
+            <td>No tests started</td>
+            <td>Default status on plan creation</td>
+          </tr>
+          <tr>
+            <td><span class="status-progress">In Progress</span></td>
+            <td>Some tests completed</td>
+            <td>Set when first result is saved</td>
+          </tr>
+          <tr>
+            <td><span class="status-pass">Pass</span></td>
+            <td>All tests completed and within spec</td>
+            <td>Set when all results exist and all pass</td>
+          </tr>
+          <tr>
+            <td><span class="status-fail">Failed</span></td>
+            <td>One or more tests out of spec</td>
+            <td>Set immediately when any test fails</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Rules</h3>
+      <ul>
+        <li><span class="check">✅</span> <strong>Pass</strong> is allowed only if all required tests are completed and
+          all pass</li>
+        <li><span class="check">✅</span> <strong>Failed</strong> is triggered automatically when any test fails</li>
+        <li><span class="check">✅</span> Status updates occur automatically when test results are saved or overridden
+        </li>
+      </ul>
+
+      <!-- 6. DATA ENTRY -->
+      <h2 id="s6">6. Data Entry &amp; Validation</h2>
+      <h3>Operator Workflow</h3>
+      <ol>
+        <li><span class="check">✅</span> Select a lot with Pending or In Progress status from the Dashboard</li>
+        <li><span class="check">✅</span> View list of required tests (derived from specification) as individual test
+          cards</li>
+        <li><span class="check">✅</span> Enter test results: numeric input for numeric tests; Pass/Fail buttons for
+          observation tests</li>
+        <li><span class="check">✅</span> System automatically compares to specification, determines Pass/Fail, and
+          updates status</li>
+      </ol>
+      <h3>Validation Rules</h3>
+      <ul>
+        <li><span class="check">✅</span> Numeric tests accept only numeric input (HTML <code>type="number"</code>)</li>
+        <li><span class="check">✅</span> Observation tests require explicit Pass or Fail button click</li>
+        <li><span class="check">✅</span> All tests from the specification are displayed — required tests cannot be
+          skipped</li>
+        <li><span class="check">✅</span> Clear visual feedback: red border on failing cards, red "FAIL" badge, spec
+          range displayed</li>
+      </ul>
+
+      <!-- 7. CoA -->
+      <h2 id="s7">7. Certificate of Analysis (CoA)</h2>
+      <h3>Requirements</h3>
+      <ul>
+        <li><span class="check">✅</span> Generated per lot</li>
+        <li><span class="check">✅</span> Viewable on screen (full-page preview with white document styling)</li>
+        <li><span class="check">✅</span> Printable and exportable as PDF (via browser Print → Save as PDF)</li>
+      </ul>
+
+      <h3>Content</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Content Item</th>
+            <th style="text-align:center">Status</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Company header</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td>QLab Industries Ltd., Quality Assurance Department, ISO 9001:2015</td>
+          </tr>
+          <tr>
+            <td>Lot number</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td>Dynamically populated from selected lot</td>
+          </tr>
+          <tr>
+            <td>Quality number</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td>Displayed in lot summary (from <code>TP_STKNO_CodeQuality</code>)</td>
+          </tr>
+          <tr>
+            <td>Product description</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td>Fetched from quality master data (<code>TP_QDESC_DescQuality</code>)</td>
+          </tr>
+          <tr>
+            <td>Test name</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td>Name + test code displayed per row</td>
+          </tr>
+          <tr>
+            <td>Unit</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td>Unit of measure per row</td>
+          </tr>
+          <tr>
+            <td>Specification limits</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td>Min – Max for numeric; Pass/Fail for observation</td>
+          </tr>
+          <tr>
+            <td>Actual results</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td>Numeric value or observation result</td>
+          </tr>
+          <tr>
+            <td>Pass/Fail status</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td>Color-coded verdict per test</td>
+          </tr>
+          <tr>
+            <td>Reference standard</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td>ASTM/ISO reference per test row</td>
+          </tr>
+          <tr>
+            <td>Overall lot status</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td>Dynamically computed (PASSED/FAILED)</td>
+          </tr>
+          <tr>
+            <td>Test dates</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td>Per-test date + testing period summary</td>
+          </tr>
+          <tr>
+            <td>Personnel</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td>Per-test operator + dedicated Personnel section</td>
+          </tr>
+          <tr>
+            <td>Optional comments</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td>Comments &amp; Remarks section (shown when comments exist)</td>
+          </tr>
+          <tr>
+            <td>Approval signature</td>
+            <td class="check" style="text-align:center">✅</td>
+            <td>Dual signature lines: Lab Manager + Quality Manager</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="note"><strong>PDF generation method:</strong> Browser-native <code>window.print()</code> with
+        dedicated <code>@media print</code> CSS rules that hide all application UI and render a clean,
+        customer-distributable document.</div>
+
+      <!-- 8. REPORTING -->
+      <h2 id="s8">8. Reporting &amp; Analytics</h2>
+
+      <h3>8.1 Trend Analysis</h3>
+      <ul>
+        <li><span class="check">✅</span> Trend charts available per Quality Number</li>
+        <li><span class="check">✅</span> Trend charts selectable per test method (auto-populates from quality's
+          specification)</li>
+        <li><span class="check">✅</span> User-selectable date range (Date From / Date To with server-side filtering)
+        </li>
+        <li><span class="check">✅</span> Displays actual results as data points on line chart</li>
+        <li><span class="check">✅</span> Displays specification limits as red dashed reference lines (Min and Max)</li>
+        <li><span class="check">✅</span> Highlights out-of-spec values with enlarged red dots and "Out-of-Spec" counter
+        </li>
+        <li><span class="check">✅</span> Custom tooltip showing lot number, result value, spec range, and OOS warning
+        </li>
+        <li><span class="check">✅</span> Raw data table below chart for detailed inspection</li>
+        <li><span class="check">✅</span> Observation tests displayed as Pass/Fail visual timeline grid</li>
+      </ul>
+
+      <h3>8.2 Failed Results Report</h3>
+      <ul>
+        <li><span class="check">✅</span> Dedicated tab showing all failed tests</li>
+        <li><span class="check">✅</span> Summary statistics: Total Failures, Unique Lots, Qualities Affected, Overrides
+          Applied</li>
+        <li><span class="check">✅</span> Filters: Date range, Quality number, Lot (free-text search), Test method</li>
+        <li><span class="check">✅</span> Clear Filters button to reset all</li>
+        <li><span class="check">✅</span> Export to CSV (one-click download with all columns and timestamped filename)
+        </li>
+      </ul>
+
+      <!-- 9. UI -->
+      <h2 id="s9">9. User Interface</h2>
+
+      <h3>Role-Based Pages</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Pages Available</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Lab Operator</strong></td>
+            <td>Dashboard (pending tests + lot counts), Test Entry (card-based inline results)</td>
+          </tr>
+          <tr>
+            <td><strong>Lab Manager</strong></td>
+            <td>All operator pages + Methods CRUD, Specifications (versioned), Review + Override, CoA Generation,
+              Reporting (trends + failures + CSV export)</td>
+          </tr>
+          <tr>
+            <td><strong>Quality Manager</strong></td>
+            <td>Full access to all pages + Admin panel (audit trail + system statistics)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>General UI Principles</h3>
+      <ul>
+        <li><span class="check">✅</span> <strong>Clear visual status indicators:</strong> Color-coded badges — <span
+            class="status-pass">Green = Pass</span>, <span class="status-fail">Red = Failed</span>, <span
+            class="status-pending">Amber = Pending</span>, <span class="status-progress">Blue = In Progress</span></li>
+        <li><span class="check">✅</span> <strong>Minimal clicks for test entry:</strong> Results save on blur (numeric)
+          or button click (observation)</li>
+        <li><span class="check">✅</span> <strong>Strong filtering and search:</strong> Filters on Dashboard, Review, and
+          Reports pages</li>
+        <li><span class="check">✅</span> <strong>Professional design:</strong> Clean white + #0B77AA enterprise theme
+          with Inter font</li>
+      </ul>
+
+
+
+
+    </div>
+</body>
+
+</html>

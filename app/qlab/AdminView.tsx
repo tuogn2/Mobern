@@ -48,7 +48,7 @@ export default function AdminView() {
                             <td style={{ fontSize: '0.8rem' }}>{r.tested_by}</td>
                             <td style={{ fontSize: '0.75rem' }}>
                                 {r.is_override ? (
-                                    <div><strong style={{ color: 'var(--warning)' }}>By: {r.overridden_by}</strong><br/>Reason: {r.override_reason}<br/>{new Date(r.overridden_at).toLocaleString()}</div>
+                                    <div><strong style={{ color: 'var(--warning)' }}>By: {r.overridden_by}</strong><br />Reason: {r.override_reason}<br />{new Date(r.overridden_at).toLocaleString()}</div>
                                 ) : '—'}
                             </td>
                         </tr>
