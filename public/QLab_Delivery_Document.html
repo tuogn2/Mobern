@@ -340,15 +340,13 @@
           <li><a href="#s7">Certificate of Analysis (CoA)</a></li>
           <li><a href="#s8">Reporting &amp; Analytics</a></li>
           <li><a href="#s9">User Interface</a></li>
-          <li><a href="#s10">Workflow &amp; Automation</a></li>
-          <li><a href="#s11">Developer Deliverables</a></li>
-          <li><a href="#s12">Design Decisions</a></li>
         </ol>
       </div>
 
       <!-- 1. SUMMARY -->
       <h2 id="s1">1. Summary</h2>
-      <p>This document defines the functional, data, and UI requirements for a Quality Lab Management application to be built in Retool.</p>
+      <p>This document defines the functional, data, and UI requirements for a Quality Lab Management application to be
+        built in Retool.</p>
       <p>The application will enable laboratory staff to:</p>
       <ul>
         <li><span class="check">✅</span> Record lab test results for production lots</li>
@@ -1061,155 +1059,7 @@
         <li><span class="check">✅</span> <strong>Professional design:</strong> Clean white + #0B77AA enterprise theme
       </ul>
 
-      <!-- 10. WORKFLOW & AUTOMATION -->
-      <h2 id="s10">10. Workflow &amp; Automation</h2>
 
-      <h3>Test Plan Auto-Generation</h3>
-      <p>The system utilizes a <strong>serverless orchestration</strong> approach to automatically generate lab test plans from production data without requiring manual intervention, cron jobs, or database triggers.</p>
-      
-      <ol>
-        <li><span class="check">✅</span> <strong>Trigger:</strong> Whenever a Lab Operator or Manager accesses the Dashboard page, a Retool backend query or workflow executes a background <code>syncTestPlans()</code> function.</li>
-        <li><span class="check">✅</span> <strong>Discovery:</strong> The function queries the production SQL Server (<code>TP</code> table) for active lots that have been scheduled.</li>
-        <li><span class="check">✅</span> <strong>Comparison:</strong> It cross-references these lots against the PostgreSQL <code>tp_lots</code> and <code>test_plans</code> lab database tables.</li>
-        <li><span class="check">✅</span> <strong>Matching:</strong> For any new lot discovered, it identifies the quality code (<code>TP_STKNO_CodeQuality</code>) and looks up the active version of the product <code>specification</code>.</li>
-        <li><span class="check">✅</span> <strong>Generation:</strong> A new <code>test_plan</code> is instantly generated containing all required test methods defined in the specification, setting the initial lot status to <code>Pending</code>.</li>
-      </ol>
-      
-      <div class="note"><strong>Benefit:</strong> This zero-configuration automation ensures that the lab's queue is always perfectly synchronized with the manufacturing floor in real-time. As soon as a lot is created in the legacy system, it instantly appears in the QLab application ready for testing.</div>
-
-      <!-- 11. DELIVERABLES -->
-      <h2 id="s11">11. Developer Deliverables</h2>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Deliverable</th>
-            <th style="text-align:center">Status</th>
-            <th>Details</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td colspan="3" style="background:#e8f4f8;font-weight:700;color:#0B77AA">Data Model</td>
-          </tr>
-          <tr>
-            <td>New tables and relationships</td>
-            <td class="check" style="text-align:center">✅</td>
-            <td>6 new tables in PostgreSQL with FK constraints and cascade rules</td>
-          </tr>
-          <tr>
-            <td>Linkage to existing tables</td>
-            <td class="check" style="text-align:center">✅</td>
-            <td><code>tp_lots.tp_skid</code> → <code>TP.TP_SKID</code>; <code>specifications.quality_code</code> →
-              <code>TP.TP_STKNO_CodeQuality</code>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="3" style="background:#e8f4f8;font-weight:700;color:#0B77AA">Application</td>
-          </tr>
-          <tr>
-            <td>Multi-page app with role-based access</td>
-            <td class="check" style="text-align:center">✅</td>
-            <td>7 views with role-based sidebar navigation</td>
-          </tr>
-          <tr>
-            <td>All required forms, dashboards, reports</td>
-            <td class="check" style="text-align:center">✅</td>
-            <td>Test entry, methods CRUD, specs CRUD, override form, trend charts, failure report</td>
-          </tr>
-          <tr>
-            <td>Automated status logic</td>
-            <td class="check" style="text-align:center">✅</td>
-            <td>Pass/fail determination, lot status updates, test plan auto-generation</td>
-          </tr>
-          <tr>
-            <td colspan="3" style="background:#e8f4f8;font-weight:700;color:#0B77AA">Documentation</td>
-          </tr>
-          <tr>
-            <td>Overview of table structure</td>
-            <td class="check" style="text-align:center">✅</td>
-            <td>This specification document — Section 4</td>
-          </tr>
-          <tr>
-            <td>Explanation of workflows</td>
-            <td class="check" style="text-align:center">✅</td>
-            <td>Test plan auto-generation, pass/fail logic, override process</td>
-          </tr>
-          <tr>
-            <td>User guidance</td>
-            <td class="check" style="text-align:center">✅</td>
-            <td>Step-by-step instructions for all three roles — Sections 3, 6</td>
-          </tr>
-          <tr>
-            <td colspan="3" style="background:#e8f4f8;font-weight:700;color:#0B77AA">Testing</td>
-          </tr>
-          <tr>
-            <td>Validation of pass/fail logic</td>
-            <td class="check" style="text-align:center">✅</td>
-            <td>All scenarios tested: within spec, below min, above max, boundary values</td>
-          </tr>
-          <tr>
-            <td>Verification of CoA accuracy</td>
-            <td class="check" style="text-align:center">✅</td>
-            <td>Lot data, results, spec limits, personnel, comments — all verified</td>
-          </tr>
-          <tr>
-            <td>Permission enforcement</td>
-            <td class="check" style="text-align:center">✅</td>
-            <td>Operator restrictions, manager capabilities, admin full access confirmed</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <!-- 12. DESIGN DECISIONS -->
-      <h2 id="s12">12. Design Decisions</h2>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Decision</th>
-            <th>Approach Chosen</th>
-            <th>Rationale</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Table schemas</strong></td>
-            <td>6 normalized tables in PostgreSQL with <code>tp_lots</code> as bridge to production SQL Server</td>
-            <td>Keeps lab data separate from production; <code>tp_skid</code> maps 1:1 to <code>TP.TP_SKID</code></td>
-          </tr>
-          <tr>
-            <td><strong>Existing data integration</strong></td>
-            <td>Read from <code>TP</code> and <code>TP_PEZZE</code> via existing SQL Server resource; sync lot references into PostgreSQL <code>tp_lots</code></td>
-            <td>No modification to production tables; lab data linked via <code>TP_SKID</code></td>
-          </tr>
-          <tr>
-            <td><strong>Test plan auto-creation</strong></td>
-            <td>Server-side sync function on Dashboard load</td>
-            <td>No cron jobs or DB triggers needed; lots appear in lab queue within seconds</td>
-          </tr>
-          <tr>
-            <td><strong>PDF generation for CoA</strong></td>
-            <td>Browser <code>window.print()</code> with <code>@media print</code> CSS</td>
-            <td>Zero server dependencies; works on all browsers; save as PDF via print dialog</td>
-          </tr>
-          <tr>
-            <td><strong>Overrides &amp; auditability</strong></td>
-            <td>Inline override fields on <code>test_results</code> + mandatory justification</td>
-            <td>Complete audit trail with who, when, why; Admin panel shows full history</td>
-          </tr>
-          <tr>
-            <td><strong>Notifications</strong></td>
-            <td>Not implemented (recommended Phase 2)</td>
-            <td>Suggest external Workflows for lot failure and completion email alerts</td>
-          </tr>
-          <tr>
-            <td><strong>Historical data migration</strong></td>
-            <td>Not implemented (Phase 4 per original proposal)</td>
-            <td>Recommend CSV export from Access → PostgreSQL <code>COPY</code> import with validation</td>
-          </tr>
-        </tbody>
-      </table>
 
     </div>
 </body>
