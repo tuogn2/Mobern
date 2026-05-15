@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QLab Pro — Development Delivery Document</title>
+  <title>QLab Pro — Retool Development Specification</title>
   <link rel="icon" type="image/jpeg" href="faviconV2.jpeg">
   <style>
     * {
@@ -317,7 +317,7 @@
     <!-- COVER -->
     <div class="cover">
       <h1>Quality Lab Application</h1>
-      <p class="subtitle">Development Delivery Document</p>
+      <p class="subtitle">Retool Development Specification</p>
       <div class="meta">
         <div class="meta-item"><strong>Project</strong>QLab Pro — Quality Lab Management System</div>
         <div class="meta-item"><strong>Version</strong>1.0.0</div>
@@ -334,7 +334,7 @@
           <li><a href="#s1">Summary</a></li>
           <li><a href="#s2">System Context &amp; Constraints</a></li>
           <li><a href="#s3">User Roles &amp; Permissions</a></li>
-          <li><a href="#s4">Data Model (Implementation)</a></li>
+          <li><a href="#s4">Data Model (Proposed)</a></li>
           <li><a href="#s5">Lab Status Logic</a></li>
           <li><a href="#s6">Data Entry &amp; Validation</a></li>
           <li><a href="#s7">Certificate of Analysis (CoA)</a></li>
@@ -345,9 +345,9 @@
 
       <!-- 1. SUMMARY -->
       <h2 id="s1">1. Summary</h2>
-      <p>This document confirms the delivery of the Quality Lab Management application as specified in the original
-        Development Specification.</p>
-      <p>The delivered application enables laboratory staff to:</p>
+      <p>This document defines the functional, data, and UI requirements for a Quality Lab Management application to be
+        built in Retool.</p>
+      <p>The application will enable laboratory staff to:</p>
       <ul>
         <li><span class="check">✅</span> Record lab test results for production lots</li>
         <li><span class="check">✅</span> Enforce product specifications automatically</li>
@@ -567,10 +567,10 @@
       </table>
 
       <!-- 4. DATA MODEL -->
-      <h2 id="s4">4. Data Model (Implementation)</h2>
+      <h2 id="s4">4. Data Model (Proposed)</h2>
 
       <h3>4.1 Test Methods</h3>
-      <p>Implemented in table: <code>test_methods</code> (Retool PostgreSQL)</p>
+      <p>To be implemented in table: <code>test_methods</code> (Retool PostgreSQL)</p>
       <table>
         <thead>
           <tr>
@@ -619,7 +619,7 @@
       </table>
 
       <h3>4.2 Specifications</h3>
-      <p>Implemented in tables: <code>specifications</code> + <code>spec_tests</code></p>
+      <p>To be implemented in tables: <code>specifications</code> + <code>spec_tests</code></p>
       <h4>specifications</h4>
       <table>
         <thead>
@@ -696,7 +696,7 @@
       </table>
 
       <h3>4.3 Test Plans</h3>
-      <p>Implemented in table: <code>test_plans</code></p>
+      <p>To be implemented in table: <code>test_plans</code></p>
       <table>
         <thead>
           <tr>
@@ -739,7 +739,7 @@
       </div>
 
       <h3>4.4 Test Results</h3>
-      <p>Implemented in table: <code>test_results</code></p>
+      <p>To be implemented in table: <code>test_results</code></p>
       <table>
         <thead>
           <tr>
@@ -1057,9 +1057,7 @@
         <li><span class="check">✅</span> <strong>Strong filtering and search:</strong> Filters on Dashboard, Review, and
           Reports pages</li>
         <li><span class="check">✅</span> <strong>Professional design:</strong> Clean white + #0B77AA enterprise theme
-          with Inter font</li>
       </ul>
-
 
 
 
